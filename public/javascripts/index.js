@@ -5,7 +5,15 @@ function initMap() {
         zoom: 13
     });
 
-    $.ajax('/points/ryzii').done(function (data) {
-        console.log(data);
+    $.ajax('/points/test').done(function (data) {
+        var line = new google.maps.Polyline({
+            path: data,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+
+        line.setMap(map);
     });
 }
