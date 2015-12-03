@@ -4,4 +4,8 @@ function initMap() {
         scrollwheel: false,
         zoom: 13
     });
+
+    $.ajax('/points/ryzii').done(function (data) {
+        console.log(data);
+    });
 }
