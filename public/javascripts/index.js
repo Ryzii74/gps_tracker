@@ -5,7 +5,7 @@ function initMap() {
         zoom: 13
     });
 
-    $.ajax('/points/test').done(function (data) {
+    $.ajax(`/points${window.location.pathName}`).done(function (data) {
         var line = new google.maps.Polyline({
             path: data,
             geodesic: true,
