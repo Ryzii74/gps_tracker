@@ -6,6 +6,7 @@ function initMap() {
     });
 
     $.ajax(`/points${window.location.pathName}`).done(function (data) {
+        data = JSON.parse(data);
         var line = new google.maps.Polyline({
             path: data,
             geodesic: true,
