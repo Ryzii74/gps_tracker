@@ -6,10 +6,11 @@ function initMap() {
     });
 
     setInterval(function () {
-        map.setMap(null);
+        var line;
+        line && line.setMap(null);
         $.ajax(`/points${window.location.pathname.replace('/map', '')}`).done(function (data) {
             data = JSON.parse(data);
-            var line = new google.maps.Polyline({
+            line = new google.maps.Polyline({
                 path: data,
                 geodesic: true,
                 strokeColor: '#FF0000',
