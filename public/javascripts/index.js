@@ -5,9 +5,14 @@ function initMap() {
         zoom: 13
     });
 
+    var line;
+    showLine();
     setInterval(function () {
-        var line;
         line && line.setMap(null);
+        showLine();
+    }, 10000);
+
+    function showLine() {
         $.ajax(`/points${window.location.pathname.replace('/map', '')}`).done(function (data) {
             data = JSON.parse(data);
             line = new google.maps.Polyline({
@@ -20,5 +25,5 @@ function initMap() {
 
             line.setMap(map);
         });
-    }, 10000);
+    }
 }
