@@ -17,9 +17,15 @@ router.post('/add', function(req, res, next) {
     });
 });
 
-router.get('/getLast', function(req, res, next) {
+router.get('/getLast/:tag', function(req, res, next) {
     global.db.collection('points')
-        .find({}, { lat : 1, lng : 1 })
+        .find({
+            tag : req.params.tag
+        }, {
+            _id : 0,
+            lat : 1,
+            lng : 1
+        })
         .limit(1)
         .sort({time : -1})
         .toArray(function (err, users) {
