@@ -17,6 +17,24 @@ router.post('/add', function(req, res, next) {
     });
 });
 
+router.get('/getLast', function(req, res, next) {
+    global.db.collection('points')
+        .find({}, { lat : 1, lng : 1 })
+        .limit(1)
+        .sort({time : -1})
+        .toArray(function (err, users) {
+            var result = {};
+            if (err) {
+                result = { success : false, error : err };
+            } else {
+                result = { success : true, data : users[0] };
+            }
+
+            res.write(JSON.stringify(result));
+            res.end();
+    });
+});
+
 router.get('/:tag/:limit', function(req, res, next) {
     req.params.limit = req.params.limit || 100;
     global.db.collection('points')
