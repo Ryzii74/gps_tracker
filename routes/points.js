@@ -42,7 +42,6 @@ router.get('/getLast/:tag', function(req, res, next) {
 });
 
 router.get('/:tag/:limit', function(req, res, next) {
-    req.params.limit = req.params.limit || 100;
     global.db.collection('points')
         .find({
             tag : req.params.tag
@@ -51,7 +50,7 @@ router.get('/:tag/:limit', function(req, res, next) {
             lng : 1,
             _id : 0
         })
-        .limit(req.params.limit)
+        .limit(Number(req.params.limit) || 20)
         .sort({ _id : -1 })
         .toArray(function (err, points) {
             res.write(JSON.stringify(points));
