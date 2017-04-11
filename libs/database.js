@@ -1,9 +1,13 @@
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-module.exports.init = function () {
-    MongoClient.connect('mongodb://localhost:27017/gps', function(err, db) {
-        if (err) return console.log(err);
+let db;
 
-        global.db = db;
-    });
+module.exports = {
+    async init() {
+        db = await MongoClient.connect('mongodb://localhost:27017/gps');
+    },
+
+    get() {
+        return db;
+    },
 };
