@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../libs/database');
 
 const router = express.Router();
 
@@ -12,13 +13,13 @@ router.post('/add', (req, res, next) => {
         time: +new Date(),
         tag: req.body.tag,
     };
-    global.db.collection('points').insert(point, (err) => {
+    db.get().collection('points').insert(point, (err) => {
         if (err) console.log(err);
     });
 });
 
 router.get('/getLast/:tag', (req, res, next) => {
-    global.db.collection('points')
+    db.get().collection('points')
         .find({
             tag: req.params.tag,
         }, {
@@ -42,7 +43,7 @@ router.get('/getLast/:tag', (req, res, next) => {
 });
 
 router.get('/:tag/:limit', (req, res, next) => {
-    global.db.collection('points')
+    db.get().collection('points')
         .find({
             tag: req.params.tag,
         }, {
