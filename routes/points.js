@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 /* GET home page. */
@@ -12,7 +13,7 @@ router.post('/add', (req, res, next) => {
         tag: req.body.tag,
     };
     global.db.collection('points').insert(point, (err) => {
-        if (err) return console.log(err);
+        if (err) console.log(err);
     });
 });
 
