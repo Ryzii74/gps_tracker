@@ -1,10 +1,17 @@
 const express = require('express');
 
-const router = express.Router();
+const users = require('./users');
+const map = require('./map');
+const points = require('./routes/points');
 
-/* GET home page. */
-router.get('/map/*', (req, res, next) => {
-    res.render('index', { title: 'Express' });
-});
+module.exports = (app) => {
+    app.use('/map', map);
+    app.use('/users', users);
+    app.use('/points', points);
 
-module.exports = router;
+    app.use((req, res, next) => {
+        const err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    });
+};
