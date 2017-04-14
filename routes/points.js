@@ -4,6 +4,7 @@ const db = require('../libs/database');
 const router = express.Router();
 
 router.post('/add', async (req, res) => {
+    let result;
     const point = {
         lat: Number(req.body.lat),
         lng: Number(req.body.lon),
@@ -11,10 +12,13 @@ router.post('/add', async (req, res) => {
         tag: req.body.tag,
     };
     try {
-        await db.get().collection('points').insert(point)
+        await db.get().collection('points').insert(point);
+        result = { success: true };
     } catch (err) {
         console.error('error adding point');
+        result = { success: false};
     }
+    res.end(JSON.stringify(result));
 });
 
 router.get('/getLast/:tag', async (req, res) => {
@@ -39,22 +43,23 @@ router.get('/getLast/:tag', async (req, res) => {
     res.end(JSON.stringify(result));
 });
 
-router.get('/:tag/:limit', async (req, res) => {
+router.get('/:tag/:limit', async (req, res, next) => {
     try {
+        const { tag, limit } = req.params;
         const points = await db.get().collection('points')
-            .find({
-                tag: req.params.tag,
-            }, {
+            .find({ tag }, {
                 lat: 1,
                 lng: 1,
                 _id: 0,
             })
-            .limit(Number(req.params.limit) || 20)
+            .limit(Number(limit) || 20)
             .sort({ _id: -1 })
             .toArray();
         res.end(JSON.stringify(points));
     } catch (err) {
         console.error('error getting points', err);
+        err.status = 404;
+        next();
     }
 });
 
