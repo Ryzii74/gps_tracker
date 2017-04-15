@@ -2,9 +2,10 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const viewMiddleware = require('./view');
+
 module.exports = (app) => {
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'jade');
+    viewMiddleware(app);
 
     app.use(logger('dev'));
     app.use(bodyParser.json());
