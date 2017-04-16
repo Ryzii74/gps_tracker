@@ -16,7 +16,7 @@ router.post('/add', async (req, res) => {
         result = { success: true };
     } catch (err) {
         console.error('error adding point');
-        result = { success: false};
+        result = { success: false };
     }
     res.end(JSON.stringify(result));
 });

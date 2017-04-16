@@ -2,7 +2,7 @@ const express = require('express');
 
 const users = require('./users');
 const map = require('./map');
-const points = require('./routes/points');
+const points = require('./points');
 
 module.exports = (app) => {
     app.use('/map', map);

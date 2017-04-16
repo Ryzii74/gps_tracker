@@ -13,5 +13,5 @@ module.exports = {
 
     objectId(id) {
         return mongo.ObjectID(id);
-    }
+    },
 };
