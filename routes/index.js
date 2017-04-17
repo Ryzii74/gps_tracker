@@ -1,14 +1,10 @@
 const express = require('express');
-
 const users = require('./users');
-const map = require('./map');
 const points = require('./points');
+const main = require('./main');
 
 module.exports = (app) => {
-    router.get('/', (req, res) => {
-        res.render('index', { title: 'Express' });
-    });
-
+    app.use('/', main);
     app.use('/users', users);
     app.use('/points', points);
 
