@@ -5,7 +5,10 @@ const map = require('./map');
 const points = require('./points');
 
 module.exports = (app) => {
-    app.use('/map', map);
+    router.get('/', (req, res) => {
+        res.render('index', { title: 'Express' });
+    });
+
     app.use('/users', users);
     app.use('/points', points);
 
