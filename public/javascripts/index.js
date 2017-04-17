@@ -1,5 +1,8 @@
 function showLine() {
-    $.ajax(`/points${window.location.pathname.replace('/map', '')}`).done((data) => {
+    const userId = window.location.pathname.replace('/', '');
+    if (!userId) return;
+
+    $.ajax(`/points${userId}`).done((data) => {
         data = JSON.parse(data);
         const line = new google.maps.Polyline({
             path: data,
