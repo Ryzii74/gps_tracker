@@ -4,15 +4,18 @@ const db = require('../libs/database');
 const router = express.Router();
 
 router.post('/add', async (req, res) => {
+    const { lat, lon, tag } = req.body;
+    if (!lat || !lon || !tag) return;
+
     let result;
     const point = {
-        lat: Number(req.body.lat),
-        lng: Number(req.body.lon),
+        lat: Number(lat),
+        lng: Number(lon),
         time: +new Date(),
-        tag: req.body.tag,
+        tag: tag,
     };
     try {
-        await db.get().collection('points').insert(point);
+        await db.get().collection('points').insertOne(point);
         result = { success: true };
     } catch (err) {
         console.error('error adding point');
@@ -24,7 +27,7 @@ router.post('/add', async (req, res) => {
 router.get('/getLast/:tag', async (req, res) => {
     let result;
     try {
-        const users = db.get().collection('points')
+        const [userPoints] = db.get().collection('points')
             .find({
                 tag: req.params.tag,
             }, {
@@ -35,7 +38,7 @@ router.get('/getLast/:tag', async (req, res) => {
             .limit(1)
             .sort({ time: -1 })
             .toArray();
-        result = { success: true, data: users[0] };
+        result = { success: true, data: userPoints };
     } catch (err) {
         console.error('error getting last points', err);
         result = { success: false, error: err };
