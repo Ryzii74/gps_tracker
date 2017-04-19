@@ -1,5 +1,4 @@
 const express = require('express');
-const users = require('./users');
 const points = require('./points');
 const main = require('./main');
 

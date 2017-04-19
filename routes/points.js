@@ -12,7 +12,7 @@ router.post('/add', async (req, res) => {
         lat: Number(lat),
         lng: Number(lon),
         time: +new Date(),
-        tag: tag,
+        tag,
     };
     try {
         await db.get().collection('points').insertOne(point);

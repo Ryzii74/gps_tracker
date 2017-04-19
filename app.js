@@ -5,7 +5,7 @@ const routes = require('./routes');
 
 const app = express();
 
-(async function () {
+(async function () { // eslint-disable-line wrap-iife
     await db.init();
     middlewares(app);
     routes(app);
