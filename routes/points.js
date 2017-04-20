@@ -18,10 +18,10 @@ router.post('/add', async (req, res) => {
         await db.get().collection('points').insertOne(point);
         result = { success: true };
     } catch (err) {
-        console.error('error adding point');
+        console.error('error adding point', err);
         result = { success: false };
     }
-    res.end(JSON.stringify(result));
+    res.json(result);
 });
 
 router.get('/getLast/:tag', async (req, res) => {
@@ -43,7 +43,7 @@ router.get('/getLast/:tag', async (req, res) => {
         console.error('error getting last points', err);
         result = { success: false, error: err };
     }
-    res.end(JSON.stringify(result));
+    res.json(result);
 });
 
 router.get('/:tag/:limit', async (req, res, next) => {
@@ -58,7 +58,7 @@ router.get('/:tag/:limit', async (req, res, next) => {
             .limit(Number(limit) || 20)
             .sort({ _id: -1 })
             .toArray();
-        res.end(JSON.stringify(points));
+        res.json(points);
     } catch (err) {
         console.error('error getting points', err);
         err.status = 404;
