@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./libs/database');
 const middlewares = require('./middlewares');
 const routes = require('./routes');
+const config = require('../config');
 
 const app = express();
 
@@ -10,6 +11,6 @@ const app = express();
     middlewares(app);
     routes(app);
 
-    const port = process.env.PORT || 3000;
+    const { port } = config;
     app.listen(port, () => console.log('listen port', port));
 })();

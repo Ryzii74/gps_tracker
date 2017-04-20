@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../libs/database');
+const config = require('../config');
 
 const router = express.Router();
 
@@ -55,7 +56,7 @@ router.get('/:tag/:limit', async (req, res, next) => {
                 lng: 1,
                 _id: 0,
             })
-            .limit(Number(limit) || 20)
+            .limit(Number(limit) || config.defaultPointsCount)
             .sort({ _id: -1 })
             .toArray();
         res.json(points);
